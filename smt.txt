@@ -1,0 +1,25 @@
+for (int i =0; i < gameWindowInfo[0]; i++) {
+            for (int j = 0; j < gameWindowInfo[1]; j++) {
+                sf::Vector2f pos(i * 32, j * 32);
+                tile.setPosition(pos);
+
+                Tile tileC(tile, isBomb(pos, bombTiles));
+                vector<int> addNumberX = {-32,0,32};
+                vector<int> addNumberY = {-32,0,32};
+                for (int addX : addNumberX) {
+                    for (int addY : addNumberY) {
+                        if (!(addY == 0 && addX == 0)) {
+                            if (i * 32 + addX > gameWindowInfo[0] * 32|| j * 32 + addY > gameWindowInfo[1] * 32 || i * 32 + addX < gameWindowInfo[0] * 32 || j * 32 + addY< gameWindowInfo[1] * 32) {
+                                pos.x = i * 32 + addX;
+                                pos.y = j * 32 + addY;
+                                Tile tileN(tile, isBomb(pos, bombTiles));
+                                tileC.addNeighbour(tileN);
+                            }
+                        }
+                    }
+
+                }
+                tileC.createNumberBombNear();
+                tiles.push_back(tileC);
+            }
+        }
